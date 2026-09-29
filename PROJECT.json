@@ -1,0 +1,22 @@
+{
+  "acceptedRevision": 1,
+  "agentInstructionsPath": "AGENTS.md",
+  "contextStartPath": "context/START.md",
+  "corpusPath": "corpus/corpus.json",
+  "corpusResultHash": "6686d56a5d2ce12d266e459b5c6462355725b9dc5ed249fc0fb7ec218b5391f6",
+  "defaultBranch": "main",
+  "objectiveId": "cmp170hx-unlock-inference",
+  "platform": "OpenCat Research",
+  "projectId": "cmp170hx-unlock-inference",
+  "repository": "bossdeep/cmp170hx-unlock-inference",
+  "schemaVersion": 1,
+  "siteUrl": "https://gaudi.clarion.run/projects/cmp170hx-unlock-inference",
+  "submission": {
+    "allowedPullRequestPath": "submissions/<submission-uuid>.json",
+    "instructionsPath": "protocol/SUBMISSION.md",
+    "schemaPath": "protocol/submission.schema.json",
+    "schemaVersion": 1,
+    "siteEndpoint": "https://gaudi.clarion.run/api/projects/cmp170hx-unlock-inference/github/contributions"
+  },
+  "title": "CMP 170HX Unlock and AI Inference Evaluation"
+}

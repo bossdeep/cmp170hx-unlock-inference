@@ -1,0 +1,276 @@
+{
+  "appliedRevisions": [
+    {
+      "appliedAt": "2026-09-29T09:12:12.181Z",
+      "resultHash": "6686d56a5d2ce12d266e459b5c6462355725b9dc5ed249fc0fb7ec218b5391f6",
+      "revision": 1
+    }
+  ],
+  "dataset": {
+    "deploymentAccess": "private",
+    "label": "CMP 170HX Unlock and AI Inference Evaluation",
+    "note": "Validated seed plus accepted corpus revision 1.",
+    "retrievedAt": "2026-09-29",
+    "seedEntryCount": 4,
+    "updated": "2026-09-29",
+    "version": "0.3"
+  },
+  "entries": [
+    {
+      "area": "hardware",
+      "basisEntryIds": [],
+      "citations": [],
+      "date": "2026-09-29",
+      "detail": "The owner seeks continuous tracking and evaluation of techniques to unlock compute throughput and addressable VRAM on CMP 170HX cards, using community repositories and discussion channels as initial reference points.",
+      "evidence": "unverified",
+      "id": "cmp170hx-unlock-inference-initial-context",
+      "kind": "context",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "seed",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "topology": "single-card"
+      },
+      "statement": "Investigating methods and community tools to unlock restricted hardware features and memory capacity on NVIDIA CMP 170HX cards for AI inference workloads.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "hardware-unlock",
+        "ai-inference",
+        "vram-expansion"
+      ]
+    },
+    {
+      "area": "hardware",
+      "basisEntryIds": [
+        "cmp170hx-unlock-inference-initial-context"
+      ],
+      "citations": [],
+      "date": "2026-09-29",
+      "detail": "A physical host system containing a CMP 170HX GPU running a compatible Linux distribution with kernel headers and Secure Boot disabled.",
+      "evidence": "unverified",
+      "id": "cmp170hx-unlock-inference-need-1",
+      "kind": "need",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "seed",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "topology": "single-card"
+      },
+      "statement": "Access to a CMP 170HX test host with prerequisite driver build environment.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "testbed",
+        "drivers"
+      ]
+    },
+    {
+      "area": "software-stack",
+      "basisEntryIds": [
+        "cmp170hx-unlock-prerequisites-finding"
+      ],
+      "citations": [
+        {
+          "note": "Kernel build and patch scripts in amoghmunikote/cmpunlocker",
+          "sourceId": "cmpunlocker-readme-source"
+        }
+      ],
+      "date": "2026-09-29",
+      "detail": "Inspect driver/build.sh and patch diffs to verify the exact mechanism by which GSP/SEC2 firmware or memory controller register checks are bypassed and assess safety risks prior to hardware execution.",
+      "evidence": "documented",
+      "id": "cmp170hx-unlock-inference-question-1",
+      "kind": "question",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "seed",
+      "privateEvidenceCount": 0,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "model": "CMP 170HX",
+        "topology": "single-card"
+      },
+      "statement": "What exact kernel source patches and firmware bypass mechanisms are applied during the build step?",
+      "status": "active",
+      "topics": [
+        "driver-patching",
+        "kernel-modules",
+        "security"
+      ],
+      "work": {
+        "doneWhen": "Source patch diffs in driver/build.sh are cataloged and risk-assessed.",
+        "inputEntryIds": [],
+        "nextAction": "Inspect driver/build.sh and kernel patches in amoghmunikote/cmpunlocker.",
+        "priority": 1,
+        "status": "ready"
+      }
+    },
+    {
+      "area": "performance",
+      "basisEntryIds": [
+        "cmp170hx-unlock-inference-initial-context",
+        "cmp170hx-unlock-inference-need-1"
+      ],
+      "citations": [],
+      "date": "2026-09-29",
+      "detail": "Once an unlocked CMP 170HX testbed is available, measure memory throughput, compute scaling, and standard LLM inference tokens per second.",
+      "evidence": "unverified",
+      "id": "cmp170hx-unlock-inference-question-2",
+      "kind": "question",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "seed",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "topology": "single-card"
+      },
+      "statement": "What inference throughput and memory capacity are achieved on unlocked CMP 170HX hardware across standard model architectures?",
+      "status": "active",
+      "topics": [
+        "llm-inference",
+        "throughput",
+        "benchmarks"
+      ],
+      "work": {
+        "doneWhen": "Inference benchmark results and memory utilization metrics are collected and compared against baseline GPU specifications.",
+        "inputEntryIds": [
+          "cmp170hx-unlock-inference-need-1"
+        ],
+        "nextAction": "Deploy standard inference benchmarks on the unlocked card and record latency, throughput, and error rates.",
+        "priority": 2,
+        "status": "blocked"
+      }
+    },
+    {
+      "area": "software-stack",
+      "basisEntryIds": [
+        "cmp170hx-unlock-inference-question-1"
+      ],
+      "citations": [
+        {
+          "note": "README and install.sh requirements for cmpunlocker",
+          "sourceId": "cmpunlocker-readme-source"
+        },
+        {
+          "note": "install.sh driver version checks and PCI ID handling",
+          "sourceId": "cmpunlocker-install-sh-source"
+        }
+      ],
+      "date": "2026-09-29",
+      "detail": "Analysis of cmpunlocker install.sh and documentation indicates prerequisites: Linux x86_64, nvidia-open 610.xx.xx+, matching kernel headers, Secure Boot disabled, and IOMMU set to passthrough (intel_iommu=on iommu=pt). Target PCI device IDs are 10de:20c2 (8GB unlocks to 64GB) and 10de:2082 (10GB unlocks to 40GB). Unlocking involves patching open-gpu-kernel-modules to override memory geometry, restore SM throughput (SS0/SS1), configure PCIe Gen2 link retries, and set up VFIO passthrough. DKMS modules are removed, creating kernel upgrade fragility.",
+      "evidence": "documented",
+      "id": "cmp170hx-unlock-prerequisites-finding",
+      "kind": "finding",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 0,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "model": "CMP 170HX",
+        "topology": "single-card"
+      },
+      "statement": "cmpunlocker requires nvidia-open 610+, disabled Secure Boot, IOMMU passthrough, and patched open-gpu-kernel-modules targeting PCI IDs 10de:20c2 and 10de:2082.",
+      "status": "active",
+      "topics": [
+        "cmpunlocker",
+        "kernel-modules",
+        "prerequisites",
+        "driver-patching"
+      ]
+    }
+  ],
+  "generatedAt": "2026-09-29T09:12:12.181Z",
+  "limitations": [
+    "Private workspace and restricted Discord provenance is omitted from this shareable projection.",
+    "Work logs, Runs, Events, proposals, credentials, sessions, connector state, and model settings remain in OpenCat Research.",
+    "A private-evidence count records omitted support without exposing private source identifiers or payloads."
+  ],
+  "objective": {
+    "goal": "Establish a reproducible process to evaluate CMP 170HX unlock methods and quantify their AI inference performance and stability.",
+    "id": "cmp170hx-unlock-inference",
+    "successSignals": [
+      {
+        "label": "prerequisites-documented",
+        "text": "Software environment prerequisites, kernel module requirements, and risk factors for unlock procedures are cataloged."
+      },
+      {
+        "label": "capacity-verified",
+        "text": "Reported memory capacity expansion and compute throughput are evaluated and recorded on hardware."
+      },
+      {
+        "label": "inference-benchmarked",
+        "text": "Baseline AI inference execution (latency and throughput) is measured on the target card."
+      }
+    ],
+    "title": "CMP 170HX Unlock and AI Inference Evaluation"
+  },
+  "projectId": "cmp170hx-unlock-inference",
+  "resultHash": "6686d56a5d2ce12d266e459b5c6462355725b9dc5ed249fc0fb7ec218b5391f6",
+  "revision": 1,
+  "schemaVersion": 1,
+  "scope": "shareable-accepted-corpus",
+  "seedHash": "985634f760648860bfa1ab46041b5fed3f629b1b0dc2c0cdff9207f3e951e35d",
+  "sources": [
+    {
+      "description": "cmpunlocker repository README outlining unlock capabilities, hardware support, and installation requirements for NVIDIA CMP 170HX.",
+      "id": "cmpunlocker-readme-source",
+      "kind": "reference-code",
+      "locator": "https://github.com/amoghmunikote/cmpunlocker",
+      "primary": true,
+      "rankRationale": "Primary project documentation for the designated community unlock tool.",
+      "retrievedAt": "2026-09-29",
+      "title": "GitHub - amoghmunikote/cmpunlocker: A tool to unlobotomize your NVIDIA card! · GitHub",
+      "visibility": "public"
+    },
+    {
+      "description": "cmpunlocker installer script detailing PCI IDs, driver version checks, kernel arguments, and module patch procedures.",
+      "id": "cmpunlocker-install-sh-source",
+      "kind": "reference-code",
+      "locator": "https://raw.githubusercontent.com/amoghmunikote/cmpunlocker/master/install.sh",
+      "primary": true,
+      "rankRationale": "Canonical installation implementation containing exact hardware detection and system configuration commands.",
+      "retrievedAt": "2026-09-29",
+      "title": "install.sh",
+      "visibility": "public"
+    }
+  ],
+  "stateView": {
+    "asOf": "2026-09-29",
+    "asOfRevision": 1,
+    "id": "cmp170hx-unlock-inference-state",
+    "knownEntryIds": [
+      "cmp170hx-unlock-prerequisites-finding"
+    ],
+    "nextAction": {
+      "entryIds": [
+        "cmp170hx-unlock-inference-question-1"
+      ],
+      "text": "Inspect driver/build.sh and kernel patches in amoghmunikote/cmpunlocker."
+    },
+    "objectiveId": "cmp170hx-unlock-inference",
+    "primaryBlocker": {
+      "entryIds": [
+        "cmp170hx-unlock-inference-need-1"
+      ],
+      "text": "Local CMP 170HX hardware testbed remains unavailable for active validation."
+    },
+    "tldr": [
+      {
+        "entryIds": [
+          "cmp170hx-unlock-prerequisites-finding"
+        ],
+        "text": "cmpunlocker prerequisites identified: nvidia-open 610+, disabled Secure Boot, IOMMU passthrough, targeting 10de:20c2 (64GB) and 10de:2082 (40GB)."
+      },
+      {
+        "entryIds": [
+          "cmp170hx-unlock-inference-question-1"
+        ],
+        "text": "Investigating specific kernel patch diffs and firmware bypass mechanisms before executing on hardware."
+      }
+    ],
+    "uncertainEntryIds": [
+      "cmp170hx-unlock-inference-need-1"
+    ]
+  }
+}
