@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 1
+acceptedRevision: 2
 doNotEdit: true
 ---
 # Sources
 
-All public Sources retained by accepted revision 1. Private provenance is never projected into a public project repository.
+All public Sources retained by accepted revision 2. Private provenance is never projected into a public project repository.
 
 ## cmpunlocker-readme-source
 
@@ -31,3 +31,14 @@ cmpunlocker installer script detailing PCI IDs, driver version checks, kernel ar
 - Retrieved: 2026-09-29
 - Primary: yes
 - Selection rationale: Canonical installation implementation containing exact hardware detection and system configuration commands.
+
+## cmpunlocker-pr58-field-report
+
+**[docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub](https://github.com/amoghmunikote/cmpunlocker/pull/58)**
+
+Field report pull request documenting dual CMP 170HX 64GB cards operating at 74 SMs running production vLLM Qwen3.8-27B-FP8, including throughput, HBM bandwidth measurements, and cache invalidation pitfalls.
+
+- Kind: community-report
+- Retrieved: 2026-09-29
+- Primary: yes
+- Selection rationale: Primary documented operational field report of vLLM LLM inference throughput and memory scaling on unlocked CMP 170HX hardware.

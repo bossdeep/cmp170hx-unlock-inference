@@ -3,7 +3,7 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 1
+acceptedRevision: 2
 doNotEdit: true
 ---
 # OpenCat Research v0.4 Tool Policy

@@ -3,7 +3,7 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 1
+acceptedRevision: 2
 doNotEdit: true
 ---
 # Evidence
@@ -121,3 +121,26 @@ Analysis of cmpunlocker install.sh and documentation indicates prerequisites: Li
 - **install.sh** (`cmpunlocker-install-sh-source`)
   - Locator: https://raw.githubusercontent.com/amoghmunikote/cmpunlocker/master/install.sh
   - Support: install.sh driver version checks and PCI ID handling
+
+## cmp170hx-vllm-inference-benchmark-finding
+
+**Unlocked CMP 170HX (64GB, 74 SMs, PCIe Gen2) achieves ~79 tok/s warm median decode in vLLM on Qwen3.8-27B-FP8; vLLM torch.compile caches require clearing upon SM count changes.**
+
+On a dual CMP 170HX (10de:20c2 8GB unlocked to 64GB) system with driver 610.43.02 and PCIe Gen2, upgrading patch revision enabled 74 SMs (up from 70 SMs). Running vLLM 0.28.0 with MTP(5) and Qwen3.8-27B-FP8 (TP=1, seqs=4, 262k context) yielded 512-token decode throughput of 15.9 to 92.0 tok/s with a warm median of ~79 tok/s. Peak HBM bandwidth reached 1,599 GB/s idle and ~928 GB/s under resident model load. Changing SM counts invalidates vLLM torch.compile caches (keyed to SM count), requiring purging /root/.cache/vllm to avoid crash loops.
+
+- Kind: finding
+- Status: active
+- Evidence: documented
+- Area: serving
+- Document date: 2026-09-29
+- Retrieved: 2026-09-29
+- Scope: topology: single-card; model: Qwen3.8-27B-FP8; precision: FP8
+- Topics: cmp170hx, ai-inference, vllm, benchmarks, sm-unlock
+- Basis Entries: `cmp170hx-unlock-prerequisites-finding`
+- Omitted private support records: 0
+
+### Citations
+
+- **docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub** (`cmpunlocker-pr58-field-report`)
+  - Locator: https://github.com/amoghmunikote/cmpunlocker/pull/58
+  - Support: Dual CMP 170HX 64GB setup running vLLM 0.28.0 Qwen3.8-27B-FP8 at 74 SMs achieving ~79 tok/s warm median decode.

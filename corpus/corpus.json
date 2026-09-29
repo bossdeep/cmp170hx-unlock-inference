@@ -4,12 +4,17 @@
       "appliedAt": "2026-09-29T09:12:12.181Z",
       "resultHash": "6686d56a5d2ce12d266e459b5c6462355725b9dc5ed249fc0fb7ec218b5391f6",
       "revision": 1
+    },
+    {
+      "appliedAt": "2026-09-29T13:55:00.388Z",
+      "resultHash": "637fb60c3de8b2aaf97bd8a7afc9252593ac548772eda6d6b5816574d875e827",
+      "revision": 2
     }
   ],
   "dataset": {
     "deploymentAccess": "private",
     "label": "CMP 170HX Unlock and AI Inference Evaluation",
-    "note": "Validated seed plus accepted corpus revision 1.",
+    "note": "Validated seed plus accepted corpus revision 2.",
     "retrievedAt": "2026-09-29",
     "seedEntryCount": 4,
     "updated": "2026-09-29",
@@ -178,9 +183,44 @@
         "prerequisites",
         "driver-patching"
       ]
+    },
+    {
+      "area": "serving",
+      "basisEntryIds": [
+        "cmp170hx-unlock-prerequisites-finding"
+      ],
+      "citations": [
+        {
+          "note": "Dual CMP 170HX 64GB setup running vLLM 0.28.0 Qwen3.8-27B-FP8 at 74 SMs achieving ~79 tok/s warm median decode.",
+          "sourceId": "cmpunlocker-pr58-field-report"
+        }
+      ],
+      "date": "2026-09-29",
+      "detail": "On a dual CMP 170HX (10de:20c2 8GB unlocked to 64GB) system with driver 610.43.02 and PCIe Gen2, upgrading patch revision enabled 74 SMs (up from 70 SMs). Running vLLM 0.28.0 with MTP(5) and Qwen3.8-27B-FP8 (TP=1, seqs=4, 262k context) yielded 512-token decode throughput of 15.9 to 92.0 tok/s with a warm median of ~79 tok/s. Peak HBM bandwidth reached 1,599 GB/s idle and ~928 GB/s under resident model load. Changing SM counts invalidates vLLM torch.compile caches (keyed to SM count), requiring purging /root/.cache/vllm to avoid crash loops.",
+      "evidence": "documented",
+      "id": "cmp170hx-vllm-inference-benchmark-finding",
+      "kind": "finding",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 0,
+      "retrievedAt": "2026-09-29",
+      "scope": {
+        "model": "Qwen3.8-27B-FP8",
+        "precision": "FP8",
+        "topology": "single-card"
+      },
+      "statement": "Unlocked CMP 170HX (64GB, 74 SMs, PCIe Gen2) achieves ~79 tok/s warm median decode in vLLM on Qwen3.8-27B-FP8; vLLM torch.compile caches require clearing upon SM count changes.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "ai-inference",
+        "vllm",
+        "benchmarks",
+        "sm-unlock"
+      ]
     }
   ],
-  "generatedAt": "2026-09-29T09:12:12.181Z",
+  "generatedAt": "2026-09-29T13:55:00.388Z",
   "limitations": [
     "Private workspace and restricted Discord provenance is omitted from this shareable projection.",
     "Work logs, Runs, Events, proposals, credentials, sessions, connector state, and model settings remain in OpenCat Research.",
@@ -206,8 +246,8 @@
     "title": "CMP 170HX Unlock and AI Inference Evaluation"
   },
   "projectId": "cmp170hx-unlock-inference",
-  "resultHash": "6686d56a5d2ce12d266e459b5c6462355725b9dc5ed249fc0fb7ec218b5391f6",
-  "revision": 1,
+  "resultHash": "637fb60c3de8b2aaf97bd8a7afc9252593ac548772eda6d6b5816574d875e827",
+  "revision": 2,
   "schemaVersion": 1,
   "scope": "shareable-accepted-corpus",
   "seedHash": "985634f760648860bfa1ab46041b5fed3f629b1b0dc2c0cdff9207f3e951e35d",
@@ -233,20 +273,32 @@
       "retrievedAt": "2026-09-29",
       "title": "install.sh",
       "visibility": "public"
+    },
+    {
+      "description": "Field report pull request documenting dual CMP 170HX 64GB cards operating at 74 SMs running production vLLM Qwen3.8-27B-FP8, including throughput, HBM bandwidth measurements, and cache invalidation pitfalls.",
+      "id": "cmpunlocker-pr58-field-report",
+      "kind": "community-report",
+      "locator": "https://github.com/amoghmunikote/cmpunlocker/pull/58",
+      "primary": true,
+      "rankRationale": "Primary documented operational field report of vLLM LLM inference throughput and memory scaling on unlocked CMP 170HX hardware.",
+      "retrievedAt": "2026-09-29",
+      "title": "docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub",
+      "visibility": "public"
     }
   ],
   "stateView": {
     "asOf": "2026-09-29",
-    "asOfRevision": 1,
+    "asOfRevision": 2,
     "id": "cmp170hx-unlock-inference-state",
     "knownEntryIds": [
-      "cmp170hx-unlock-prerequisites-finding"
+      "cmp170hx-unlock-prerequisites-finding",
+      "cmp170hx-vllm-inference-benchmark-finding"
     ],
     "nextAction": {
       "entryIds": [
         "cmp170hx-unlock-inference-question-1"
       ],
-      "text": "Inspect driver/build.sh and kernel patches in amoghmunikote/cmpunlocker."
+      "text": "Inspect driver/build.sh, SEC2/PLM patch diffs, and HBM control PLMs in amoghmunikote/cmpunlocker."
     },
     "objectiveId": "cmp170hx-unlock-inference",
     "primaryBlocker": {
@@ -264,9 +316,9 @@
       },
       {
         "entryIds": [
-          "cmp170hx-unlock-inference-question-1"
+          "cmp170hx-vllm-inference-benchmark-finding"
         ],
-        "text": "Investigating specific kernel patch diffs and firmware bypass mechanisms before executing on hardware."
+        "text": "Field reports document dual CMP 170HX 64GB cards running at 74 SMs achieving ~79 tok/s warm median decode on Qwen3.8-27B-FP8 under vLLM 0.28.0."
       }
     ],
     "uncertainEntryIds": [

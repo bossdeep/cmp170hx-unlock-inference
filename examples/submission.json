@@ -1,7 +1,7 @@
 {
   "base": {
     "commit": "0000000000000000000000000000000000000000",
-    "revision": 1
+    "revision": 2
   },
   "failedSearches": [],
   "finding": "State the strongest bounded proposition directly supported by the retained source evidence.",
@@ -18,7 +18,7 @@
       "exactExcerpt": "Kernel build and patch scripts in amoghmunikote/cmpunlocker",
       "kind": "reference-code",
       "relevance": "Explain how this source supports the finding for work item cmp170hx-unlock-inference-question-1.",
-      "retrievedAt": "2026-09-29T09:12:12.181Z",
+      "retrievedAt": "2026-09-29T13:55:00.388Z",
       "title": "GitHub - amoghmunikote/cmpunlocker: A tool to unlobotomize your NVIDIA card! · GitHub",
       "url": "https://github.com/amoghmunikote/cmpunlocker"
     }

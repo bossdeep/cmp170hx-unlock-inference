@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 1
+acceptedRevision: 2
 doNotEdit: true
 ---
 # CMP 170HX Unlock and AI Inference Evaluation
 
-Accepted research state published by [OpenCat Research](https://gaudi.clarion.run/projects/cmp170hx-unlock-inference). Revision **1** · generated 2026-09-29T09:12:12.181Z · [machine corpus](corpus/corpus.json) · [integrity manifest](MANIFEST.json).
+Accepted research state published by [OpenCat Research](https://gaudi.clarion.run/projects/cmp170hx-unlock-inference). Revision **2** · generated 2026-09-29T13:55:00.388Z · [machine corpus](corpus/corpus.json) · [integrity manifest](MANIFEST.json).
 
 ## Objective
 
@@ -23,7 +23,7 @@ Establish a reproducible process to evaluate CMP 170HX unlock methods and quanti
 ## TLDR
 
 - cmpunlocker prerequisites identified: nvidia-open 610+, disabled Secure Boot, IOMMU passthrough, targeting 10de:20c2 (64GB) and 10de:2082 (40GB).
-- Investigating specific kernel patch diffs and firmware bypass mechanisms before executing on hardware.
+- Field reports document dual CMP 170HX 64GB cards running at 74 SMs achieving ~79 tok/s warm median decode on Qwen3.8-27B-FP8 under vLLM 0.28.0.
 
 ## Primary blocker
 
@@ -31,7 +31,7 @@ Local CMP 170HX hardware testbed remains unavailable for active validation.
 
 ## Next action
 
-Inspect driver/build.sh and kernel patches in amoghmunikote/cmpunlocker.
+Inspect driver/build.sh, SEC2/PLM patch diffs, and HBM control PLMs in amoghmunikote/cmpunlocker.
 
 ## Current priorities
 
@@ -43,6 +43,7 @@ Inspect driver/build.sh and kernel patches in amoghmunikote/cmpunlocker.
 ## Known
 
 - [cmpunlocker requires nvidia-open 610+, disabled Secure Boot, IOMMU passthrough, and patched open-gpu-kernel-modules targeting PCI IDs 10de:20c2 and 10de:2082.](context/EVIDENCE.md#cmp170hx-unlock-prerequisites-finding)
+- [Unlocked CMP 170HX (64GB, 74 SMs, PCIe Gen2) achieves ~79 tok/s warm median decode in vLLM on Qwen3.8-27B-FP8; vLLM torch.compile caches require clearing upon SM count changes.](context/EVIDENCE.md#cmp170hx-vllm-inference-benchmark-finding)
 
 ## Uncertain
 
