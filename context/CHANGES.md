@@ -3,18 +3,23 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 2
+acceptedRevision: 3
 doNotEdit: true
 ---
 # Accepted changes
 
 Git history is the complete publication history. This projection lists current public records under the accepted revision that last changed them.
 
+## Revision 3
+
+Applied 2026-10-01T23:51:08.250Z.
+
+- State: current State revised
+
 ## Revision 2
 
 Applied 2026-09-29T13:55:00.388Z.
 
-- State: current State revised
 - Accepted Entry: `cmp170hx-vllm-inference-benchmark-finding` — Unlocked CMP 170HX (64GB, 74 SMs, PCIe Gen2) achieves ~79 tok/s warm median decode in vLLM on Qwen3.8-27B-FP8; vLLM torch.compile caches require clearing upon SM count changes.
 - Source added: `cmpunlocker-pr58-field-report` — docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub
 

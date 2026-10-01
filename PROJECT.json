@@ -1,9 +1,9 @@
 {
-  "acceptedRevision": 2,
+  "acceptedRevision": 3,
   "agentInstructionsPath": "AGENTS.md",
   "contextStartPath": "context/START.md",
   "corpusPath": "corpus/corpus.json",
-  "corpusResultHash": "637fb60c3de8b2aaf97bd8a7afc9252593ac548772eda6d6b5816574d875e827",
+  "corpusResultHash": "df7c95f236baa05ecec0d6df57f2ba26c3f7e713d6ddfee41e28e332f926280a",
   "defaultBranch": "main",
   "objectiveId": "cmp170hx-unlock-inference",
   "platform": "OpenCat Research",

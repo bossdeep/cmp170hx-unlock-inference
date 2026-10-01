@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 2
+acceptedRevision: 3
 doNotEdit: true
 ---
 # Evidence
 
-Every accepted Entry, including inactive history. Public citations retain the exact bounded support note used by the corpus.
+Every accepted Entry, including inactive history. Claims carry an evidence badge; questions and decisions do not. Public citations retain the exact bounded support note used by the corpus.
 
 ## cmp170hx-unlock-inference-initial-context
 
@@ -16,9 +16,9 @@ Every accepted Entry, including inactive history. Public citations retain the ex
 
 The owner seeks continuous tracking and evaluation of techniques to unlock compute throughput and addressable VRAM on CMP 170HX cards, using community repositories and discussion channels as initial reference points.
 
-- Kind: context
+- Kind: Claim
 - Status: active
-- Evidence: unverified
+- Evidence: Unverified
 - Area: hardware
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
@@ -37,9 +37,8 @@ No public citation retained.
 
 A physical host system containing a CMP 170HX GPU running a compatible Linux distribution with kernel headers and Secure Boot disabled.
 
-- Kind: need
+- Kind: Question
 - Status: active
-- Evidence: unverified
 - Area: hardware
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
@@ -58,9 +57,8 @@ No public citation retained.
 
 Inspect driver/build.sh and patch diffs to verify the exact mechanism by which GSP/SEC2 firmware or memory controller register checks are bypassed and assess safety risks prior to hardware execution.
 
-- Kind: question
+- Kind: Question
 - Status: active
-- Evidence: documented
 - Area: software-stack
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
@@ -81,9 +79,8 @@ Inspect driver/build.sh and patch diffs to verify the exact mechanism by which G
 
 Once an unlocked CMP 170HX testbed is available, measure memory throughput, compute scaling, and standard LLM inference tokens per second.
 
-- Kind: question
+- Kind: Question
 - Status: active
-- Evidence: unverified
 - Area: performance
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
@@ -102,9 +99,9 @@ No public citation retained.
 
 Analysis of cmpunlocker install.sh and documentation indicates prerequisites: Linux x86_64, nvidia-open 610.xx.xx+, matching kernel headers, Secure Boot disabled, and IOMMU set to passthrough (intel_iommu=on iommu=pt). Target PCI device IDs are 10de:20c2 (8GB unlocks to 64GB) and 10de:2082 (10GB unlocks to 40GB). Unlocking involves patching open-gpu-kernel-modules to override memory geometry, restore SM throughput (SS0/SS1), configure PCIe Gen2 link retries, and set up VFIO passthrough. DKMS modules are removed, creating kernel upgrade fragility.
 
-- Kind: finding
+- Kind: Claim
 - Status: active
-- Evidence: documented
+- Evidence: Documented
 - Area: software-stack
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
@@ -128,9 +125,9 @@ Analysis of cmpunlocker install.sh and documentation indicates prerequisites: Li
 
 On a dual CMP 170HX (10de:20c2 8GB unlocked to 64GB) system with driver 610.43.02 and PCIe Gen2, upgrading patch revision enabled 74 SMs (up from 70 SMs). Running vLLM 0.28.0 with MTP(5) and Qwen3.8-27B-FP8 (TP=1, seqs=4, 262k context) yielded 512-token decode throughput of 15.9 to 92.0 tok/s with a warm median of ~79 tok/s. Peak HBM bandwidth reached 1,599 GB/s idle and ~928 GB/s under resident model load. Changing SM counts invalidates vLLM torch.compile caches (keyed to SM count), requiring purging /root/.cache/vllm to avoid crash loops.
 
-- Kind: finding
+- Kind: Claim
 - Status: active
-- Evidence: documented
+- Evidence: Documented
 - Area: serving
 - Document date: 2026-09-29
 - Retrieved: 2026-09-29
