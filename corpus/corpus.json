@@ -19,15 +19,20 @@
       "appliedAt": "2026-10-02T04:58:14.125Z",
       "resultHash": "f7e82ac5475d2ddf43bc5bfb5eabb233121a03f1c5e55171ae87bc24d55a2e17",
       "revision": 4
+    },
+    {
+      "appliedAt": "2026-10-02T05:07:00.721Z",
+      "resultHash": "e9edfc8496fa3c2a2cc2bc6dd37c95ce676ed2d33d2ce42778b7624093b6b386",
+      "revision": 5
     }
   ],
   "dataset": {
     "deploymentAccess": "private",
     "label": "CMP 170HX Unlock and AI Inference Evaluation",
-    "note": "Validated seed plus accepted corpus revision 4.",
+    "note": "Validated seed plus accepted corpus revision 5.",
     "retrievedAt": "2026-09-29",
     "seedEntryCount": 4,
-    "updated": "2026-10-01",
+    "updated": "2026-10-02",
     "version": "0.4"
   },
   "entries": [
@@ -315,9 +320,79 @@
         "glm5.3-flash",
         "long-context"
       ]
+    },
+    {
+      "area": "distributed",
+      "basisEntryIds": [
+        "cmp170hx-unlock-prerequisites-finding"
+      ],
+      "citations": [
+        {
+          "note": "Discussion of BAR1 P2P, NCCL_P2P_LEVEL=SYS, and --disable-custom-all-reduce on Level1Techs",
+          "sourceId": "level1techs-cmp170hx-thread-source"
+        }
+      ],
+      "date": "2026-10-02",
+      "detail": "Multi-GPU operation of CMP 170HX (64GB) across separate PCIe root complexes or downstream of a Broadcom PEX88096 switch achieves working BAR1 P2P in open drivers (610.43/610.57). Validated via cuMemcpyPeer and SM remote memory read/write. Key deployment requirements: set NCCL_P2P_LEVEL=SYS and pass --disable-custom-all-reduce in vLLM (custom IPC all-reduce crashes across root complexes/switches with 'invalid argument' or VRAM OOM, whereas PyNCCL functions reliably).",
+      "evidence": "documented",
+      "id": "cmp170hx-p2p-multigpu-prerequisites-finding",
+      "kind": "claim",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 0,
+      "retrievedAt": "2026-10-02",
+      "scope": {
+        "model": "CMP 170HX",
+        "topology": "tp2"
+      },
+      "statement": "CMP 170HX multi-GPU setups require NCCL_P2P_LEVEL=SYS and vLLM --disable-custom-all-reduce to enable functional BAR1 P2P and prevent IPC all-reduce crashes.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "p2p",
+        "nccl",
+        "vllm",
+        "distributed",
+        "pex88096"
+      ]
+    },
+    {
+      "area": "serving",
+      "basisEntryIds": [
+        "cmp170hx-p2p-multigpu-prerequisites-finding"
+      ],
+      "citations": [
+        {
+          "note": "Cache-free vLLM benchmark results comparing no-P2P vs P2P on 2x CMP 170HX W4A16 TP2 MTP4",
+          "sourceId": "level1techs-cmp170hx-thread-source"
+        }
+      ],
+      "date": "2026-10-02",
+      "detail": "On 2x CMP 170HX (64GB, PCIe Gen2 x16, driver 610.57.04, vLLM 0.30.0), running Qwen3.8-Flash-Next W4A16 TP2+EP MTP4 with cache-free benchmarking showed: P2P nearly doubles prefill throughput over host-staged communication (8k prefill increased from 2,476 to 4,714 tok/s, 128k prefill from 2,443 to 4,378 tok/s), while decode throughput saw an ~8% increase (111.3 to ~120 tok/s). FP8 KV cache crashed on model load with the QWEN4_EXP attention backend.",
+      "evidence": "documented",
+      "id": "cmp170hx-tp2-p2p-vllm-benchmark-finding",
+      "kind": "claim",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 0,
+      "retrievedAt": "2026-10-02",
+      "scope": {
+        "model": "Qwen3.8-Flash-Next",
+        "precision": "W4A16",
+        "topology": "tp2"
+      },
+      "statement": "Dual CMP 170HX in vLLM TP2 with BAR1 P2P achieves 4,714 tok/s 8k prefill (~1.9x gain over host-staged) and ~120 tok/s decode on Qwen3.8-Flash-Next W4A16.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "benchmarks",
+        "vllm",
+        "tp2",
+        "p2p"
+      ]
     }
   ],
-  "generatedAt": "2026-10-02T04:58:14.125Z",
+  "generatedAt": "2026-10-02T05:07:00.721Z",
   "limitations": [
     "Private workspace and restricted Discord provenance is omitted from this shareable projection.",
     "Work logs, Runs, Events, proposals, credentials, sessions, connector state, and model settings remain in OpenCat Research.",
@@ -343,8 +418,8 @@
     "title": "CMP 170HX Unlock and AI Inference Evaluation"
   },
   "projectId": "cmp170hx-unlock-inference",
-  "resultHash": "f7e82ac5475d2ddf43bc5bfb5eabb233121a03f1c5e55171ae87bc24d55a2e17",
-  "revision": 4,
+  "resultHash": "e9edfc8496fa3c2a2cc2bc6dd37c95ce676ed2d33d2ce42778b7624093b6b386",
+  "revision": 5,
   "schemaVersion": 1,
   "scope": "shareable-accepted-corpus",
   "seedHash": "3109de8ef67172d06853586232f727871c8d847bba0984812a35b9bf66b85006",
@@ -381,11 +456,22 @@
       "retrievedAt": "2026-09-29",
       "title": "docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub",
       "visibility": "public"
+    },
+    {
+      "description": "Forum thread on Level1Techs documenting PCIe BAR1 P2P enablement, NCCL settings, and vLLM TP2 benchmark results on CMP 170HX across root complexes and PEX88096 switches.",
+      "id": "level1techs-cmp170hx-thread-source",
+      "kind": "community-report",
+      "locator": "https://forum.level1techs.com/t/couldnt-resist-grabbing-a-cmp-170hx-and-now-im-in-a-sticky-position/253947?page=3",
+      "primary": true,
+      "rankRationale": "Primary user-reported hardware benchmarks and driver/NCCL configuration for multi-card CMP 170HX with P2P.",
+      "retrievedAt": "2026-10-02",
+      "title": "Couldn't resist grabbing a CMP 170HX, and now I'm in a sticky position - #41 by ropuls - Machine Learning, LLMs, & AI - Level1Techs Forums",
+      "visibility": "public"
     }
   ],
   "stateView": {
-    "asOf": "2026-10-01",
-    "asOfRevision": 3,
+    "asOf": "2026-10-02",
+    "asOfRevision": 5,
     "criteria": [
       {
         "answer": [
@@ -394,6 +480,12 @@
               "cmp170hx-unlock-prerequisites-finding"
             ],
             "text": "cmpunlocker prerequisites identified: nvidia-open 610+, disabled Secure Boot, IOMMU passthrough, targeting 10de:20c2 (64GB) and 10de:2082 (40GB)."
+          },
+          {
+            "entryIds": [
+              "cmp170hx-p2p-multigpu-prerequisites-finding"
+            ],
+            "text": "Multi-card setups across root complexes or PEX88096 switches require NCCL_P2P_LEVEL=SYS and vLLM --disable-custom-all-reduce to avoid custom IPC all-reduce crashes."
           }
         ],
         "label": "prerequisites-documented",
@@ -413,6 +505,12 @@
               "cmp170hx-vllm-inference-benchmark-finding"
             ],
             "text": "Field reports document dual CMP 170HX 64GB cards running at 74 SMs achieving ~79 tok/s warm median decode on Qwen3.8-27B-FP8 under vLLM 0.28.0."
+          },
+          {
+            "entryIds": [
+              "cmp170hx-tp2-p2p-vllm-benchmark-finding"
+            ],
+            "text": "2x CMP 170HX TP2 with BAR1 P2P achieves 4,714 tok/s 8k prefill (1.9x vs host-staged) and ~120 tok/s decode on Qwen3.8-Flash-Next W4A16 in vLLM 0.30.0."
           }
         ],
         "label": "inference-benchmarked",

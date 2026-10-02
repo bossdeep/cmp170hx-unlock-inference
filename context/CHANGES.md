@@ -3,12 +3,21 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 4
+acceptedRevision: 5
 doNotEdit: true
 ---
 # Accepted changes
 
 Git history is the complete publication history. This projection lists current public records under the accepted revision that last changed them.
+
+## Revision 5
+
+Applied 2026-10-02T05:07:00.721Z.
+
+- State: current State revised
+- Accepted Entry: `cmp170hx-p2p-multigpu-prerequisites-finding` — CMP 170HX multi-GPU setups require NCCL_P2P_LEVEL=SYS and vLLM --disable-custom-all-reduce to enable functional BAR1 P2P and prevent IPC all-reduce crashes.
+- Accepted Entry: `cmp170hx-tp2-p2p-vllm-benchmark-finding` — Dual CMP 170HX in vLLM TP2 with BAR1 P2P achieves 4,714 tok/s 8k prefill (~1.9x gain over host-staged) and ~120 tok/s decode on Qwen3.8-Flash-Next W4A16.
+- Source added: `level1techs-cmp170hx-thread-source` — Couldn't resist grabbing a CMP 170HX, and now I'm in a sticky position - #41 by ropuls - Machine Learning, LLMs, & AI - Level1Techs Forums
 
 ## Revision 4
 
@@ -22,7 +31,7 @@ Applied 2026-10-02T04:58:14.125Z.
 
 Applied 2026-10-01T23:51:08.250Z.
 
-- State: current State revised
+No public records from this revision remain current.
 
 ## Revision 2
 

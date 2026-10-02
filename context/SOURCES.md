@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 4
+acceptedRevision: 5
 doNotEdit: true
 ---
 # Sources
 
-All public Sources retained by accepted revision 4. Private provenance is never projected into a public project repository.
+All public Sources retained by accepted revision 5. Private provenance is never projected into a public project repository.
 
 ## cmpunlocker-readme-source
 
@@ -42,3 +42,14 @@ Field report pull request documenting dual CMP 170HX 64GB cards operating at 74 
 - Retrieved: 2026-09-29
 - Primary: yes
 - Selection rationale: Primary documented operational field report of vLLM LLM inference throughput and memory scaling on unlocked CMP 170HX hardware.
+
+## level1techs-cmp170hx-thread-source
+
+**[Couldn't resist grabbing a CMP 170HX, and now I'm in a sticky position - #41 by ropuls - Machine Learning, LLMs, & AI - Level1Techs Forums](https://forum.level1techs.com/t/couldnt-resist-grabbing-a-cmp-170hx-and-now-im-in-a-sticky-position/253947?page=3)**
+
+Forum thread on Level1Techs documenting PCIe BAR1 P2P enablement, NCCL settings, and vLLM TP2 benchmark results on CMP 170HX across root complexes and PEX88096 switches.
+
+- Kind: community-report
+- Retrieved: 2026-10-02
+- Primary: yes
+- Selection rationale: Primary user-reported hardware benchmarks and driver/NCCL configuration for multi-card CMP 170HX with P2P.

@@ -3,7 +3,7 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 4
+acceptedRevision: 5
 doNotEdit: true
 ---
 # Evidence
@@ -204,3 +204,49 @@ A community field report describes a 4-card CMP 170HX rig running GLM5.3-Flash, 
 ### Citations
 
 No public citation retained.
+
+## cmp170hx-p2p-multigpu-prerequisites-finding
+
+**CMP 170HX multi-GPU setups require NCCL_P2P_LEVEL=SYS and vLLM --disable-custom-all-reduce to enable functional BAR1 P2P and prevent IPC all-reduce crashes.**
+
+Multi-GPU operation of CMP 170HX (64GB) across separate PCIe root complexes or downstream of a Broadcom PEX88096 switch achieves working BAR1 P2P in open drivers (610.43/610.57). Validated via cuMemcpyPeer and SM remote memory read/write. Key deployment requirements: set NCCL_P2P_LEVEL=SYS and pass --disable-custom-all-reduce in vLLM (custom IPC all-reduce crashes across root complexes/switches with 'invalid argument' or VRAM OOM, whereas PyNCCL functions reliably).
+
+- Kind: Claim
+- Status: active
+- Evidence: Documented
+- Area: distributed
+- Document date: 2026-10-02
+- Retrieved: 2026-10-02
+- Scope: topology: tp2; model: CMP 170HX
+- Topics: cmp170hx, p2p, nccl, vllm, distributed, pex88096
+- Basis Entries: `cmp170hx-unlock-prerequisites-finding`
+- Omitted private support records: 0
+
+### Citations
+
+- **Couldn't resist grabbing a CMP 170HX, and now I'm in a sticky position - #41 by ropuls - Machine Learning, LLMs, & AI - Level1Techs Forums** (`level1techs-cmp170hx-thread-source`)
+  - Locator: https://forum.level1techs.com/t/couldnt-resist-grabbing-a-cmp-170hx-and-now-im-in-a-sticky-position/253947?page=3
+  - Support: Discussion of BAR1 P2P, NCCL_P2P_LEVEL=SYS, and --disable-custom-all-reduce on Level1Techs
+
+## cmp170hx-tp2-p2p-vllm-benchmark-finding
+
+**Dual CMP 170HX in vLLM TP2 with BAR1 P2P achieves 4,714 tok/s 8k prefill (~1.9x gain over host-staged) and ~120 tok/s decode on Qwen3.8-Flash-Next W4A16.**
+
+On 2x CMP 170HX (64GB, PCIe Gen2 x16, driver 610.57.04, vLLM 0.30.0), running Qwen3.8-Flash-Next W4A16 TP2+EP MTP4 with cache-free benchmarking showed: P2P nearly doubles prefill throughput over host-staged communication (8k prefill increased from 2,476 to 4,714 tok/s, 128k prefill from 2,443 to 4,378 tok/s), while decode throughput saw an ~8% increase (111.3 to ~120 tok/s). FP8 KV cache crashed on model load with the QWEN4_EXP attention backend.
+
+- Kind: Claim
+- Status: active
+- Evidence: Documented
+- Area: serving
+- Document date: 2026-10-02
+- Retrieved: 2026-10-02
+- Scope: topology: tp2; model: Qwen3.8-Flash-Next; precision: W4A16
+- Topics: cmp170hx, benchmarks, vllm, tp2, p2p
+- Basis Entries: `cmp170hx-p2p-multigpu-prerequisites-finding`
+- Omitted private support records: 0
+
+### Citations
+
+- **Couldn't resist grabbing a CMP 170HX, and now I'm in a sticky position - #41 by ropuls - Machine Learning, LLMs, & AI - Level1Techs Forums** (`level1techs-cmp170hx-thread-source`)
+  - Locator: https://forum.level1techs.com/t/couldnt-resist-grabbing-a-cmp-170hx-and-now-im-in-a-sticky-position/253947?page=3
+  - Support: Cache-free vLLM benchmark results comparing no-P2P vs P2P on 2x CMP 170HX W4A16 TP2 MTP4
