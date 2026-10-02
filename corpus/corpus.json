@@ -14,12 +14,17 @@
       "appliedAt": "2026-10-01T23:51:08.250Z",
       "resultHash": "df7c95f236baa05ecec0d6df57f2ba26c3f7e713d6ddfee41e28e332f926280a",
       "revision": 3
+    },
+    {
+      "appliedAt": "2026-10-02T04:58:14.125Z",
+      "resultHash": "f7e82ac5475d2ddf43bc5bfb5eabb233121a03f1c5e55171ae87bc24d55a2e17",
+      "revision": 4
     }
   ],
   "dataset": {
     "deploymentAccess": "private",
     "label": "CMP 170HX Unlock and AI Inference Evaluation",
-    "note": "Validated seed plus accepted corpus revision 3.",
+    "note": "Validated seed plus accepted corpus revision 4.",
     "retrievedAt": "2026-09-29",
     "seedEntryCount": 4,
     "updated": "2026-10-01",
@@ -223,9 +228,96 @@
         "benchmarks",
         "sm-unlock"
       ]
+    },
+    {
+      "area": "reliability",
+      "basisEntryIds": [
+        "cmp170hx-unlock-prerequisites-finding"
+      ],
+      "citations": [],
+      "date": "2026-09-30",
+      "detail": "A 4-card CMP 170HX setup unlocked to 64GB encountered an unrecoverable failure during concurrent PyTorch execution across all four cards, triggering an Xid 154 error. Subsequent reboots hang at GFW_BOOT progress 0x1 with RmInitAdapter failure 0x62:0x55:2130, despite the device remaining visible in lspci and VBIOS dump matching functional cards. Community analysis attributes this to power delivery rail (pexvdd) breakdown or HBM interconnect failure under unthrottled load, highlighting the need for conservative power capping (e.g. 200W).",
+      "evidence": "unverified",
+      "id": "cmp170hx-failure-mode-xid154-finding",
+      "kind": "claim",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-10-02",
+      "scope": {
+        "model": "CMP 170HX",
+        "topology": "not-stated"
+      },
+      "statement": "Unlocked CMP 170HX cards face potential unrecoverable hardware failure (Xid 154, GFW_BOOT progress 0x1) under multi-card heavy PyTorch workloads unless power capped.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "hardware-failure",
+        "xid-errors",
+        "reliability",
+        "power-limits"
+      ]
+    },
+    {
+      "area": "hardware",
+      "basisEntryIds": [
+        "cmp170hx-unlock-prerequisites-finding"
+      ],
+      "citations": [],
+      "date": "2026-09-30",
+      "detail": "Testing with external hardware flashers and modified nvflash utilities confirmed that CMP 170HX hardware validates VBIOS device IDs against hard-burned efuses. Flashing mismatched firmware or attempting to bypass board ID certificate checks results in the GPU failing to load firmware at boot, demonstrating that device personality cannot be changed purely via SPI VBIOS flashing without software driver-level interception.",
+      "evidence": "unverified",
+      "id": "cmp170hx-vbios-hard-fuse-validation-finding",
+      "kind": "claim",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-10-02",
+      "scope": {
+        "model": "CMP 170HX",
+        "topology": "single-card"
+      },
+      "statement": "CMP 170HX validates VBIOS device IDs against physical hard fuses, causing boot firmware load failures if non-native VBIOS images are flashed.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "vbios",
+        "efuse",
+        "firmware",
+        "nvflash"
+      ]
+    },
+    {
+      "area": "serving",
+      "basisEntryIds": [
+        "cmp170hx-vllm-inference-benchmark-finding"
+      ],
+      "citations": [],
+      "date": "2026-09-30",
+      "detail": "A community field report describes a 4-card CMP 170HX rig running GLM5.3-Flash, delivering >100 tok/s inference throughput at >200k context length. This demonstrates multi-card serving feasibility across large context windows on unlocked CMP 170HX hardware.",
+      "evidence": "unverified",
+      "id": "cmp170hx-glm-multicard-inference-finding",
+      "kind": "claim",
+      "objectiveId": "cmp170hx-unlock-inference",
+      "origin": "runtime",
+      "privateEvidenceCount": 1,
+      "retrievedAt": "2026-10-02",
+      "scope": {
+        "model": "GLM5.3-Flash",
+        "topology": "eight-card"
+      },
+      "statement": "A 4-card unlocked CMP 170HX setup achieves over 100 tok/s serving GLM5.3-Flash at >200k context.",
+      "status": "active",
+      "topics": [
+        "cmp170hx",
+        "multi-card",
+        "inference",
+        "glm5.3-flash",
+        "long-context"
+      ]
     }
   ],
-  "generatedAt": "2026-10-01T23:51:08.250Z",
+  "generatedAt": "2026-10-02T04:58:14.125Z",
   "limitations": [
     "Private workspace and restricted Discord provenance is omitted from this shareable projection.",
     "Work logs, Runs, Events, proposals, credentials, sessions, connector state, and model settings remain in OpenCat Research.",
@@ -251,8 +343,8 @@
     "title": "CMP 170HX Unlock and AI Inference Evaluation"
   },
   "projectId": "cmp170hx-unlock-inference",
-  "resultHash": "df7c95f236baa05ecec0d6df57f2ba26c3f7e713d6ddfee41e28e332f926280a",
-  "revision": 3,
+  "resultHash": "f7e82ac5475d2ddf43bc5bfb5eabb233121a03f1c5e55171ae87bc24d55a2e17",
+  "revision": 4,
   "schemaVersion": 1,
   "scope": "shareable-accepted-corpus",
   "seedHash": "3109de8ef67172d06853586232f727871c8d847bba0984812a35b9bf66b85006",

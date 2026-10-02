@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 3
+acceptedRevision: 4
 doNotEdit: true
 ---
 # CMP 170HX Unlock and AI Inference Evaluation
 
-Accepted research state published by [OpenCat Research](https://gaudi.clarion.run/projects/cmp170hx-unlock-inference). Revision **3** · generated 2026-10-01T23:51:08.250Z · [machine corpus](corpus/corpus.json) · [integrity manifest](MANIFEST.json).
+Accepted research state published by [OpenCat Research](https://gaudi.clarion.run/projects/cmp170hx-unlock-inference). Revision **4** · generated 2026-10-02T04:58:14.125Z · [machine corpus](corpus/corpus.json) · [integrity manifest](MANIFEST.json).
 
 ## Objective
 

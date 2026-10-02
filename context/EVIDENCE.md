@@ -3,7 +3,7 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 3
+acceptedRevision: 4
 doNotEdit: true
 ---
 # Evidence
@@ -141,3 +141,66 @@ On a dual CMP 170HX (10de:20c2 8GB unlocked to 64GB) system with driver 610.43.0
 - **docs: field report — dual CMP 170HX at 74 SM (PR #55) with production vLLM throughput by isenlink · Pull Request #58 · amoghmunikote/cmpunlocker · GitHub** (`cmpunlocker-pr58-field-report`)
   - Locator: https://github.com/amoghmunikote/cmpunlocker/pull/58
   - Support: Dual CMP 170HX 64GB setup running vLLM 0.28.0 Qwen3.8-27B-FP8 at 74 SMs achieving ~79 tok/s warm median decode.
+
+## cmp170hx-failure-mode-xid154-finding
+
+**Unlocked CMP 170HX cards face potential unrecoverable hardware failure (Xid 154, GFW_BOOT progress 0x1) under multi-card heavy PyTorch workloads unless power capped.**
+
+A 4-card CMP 170HX setup unlocked to 64GB encountered an unrecoverable failure during concurrent PyTorch execution across all four cards, triggering an Xid 154 error. Subsequent reboots hang at GFW_BOOT progress 0x1 with RmInitAdapter failure 0x62:0x55:2130, despite the device remaining visible in lspci and VBIOS dump matching functional cards. Community analysis attributes this to power delivery rail (pexvdd) breakdown or HBM interconnect failure under unthrottled load, highlighting the need for conservative power capping (e.g. 200W).
+
+- Kind: Claim
+- Status: active
+- Evidence: Unverified
+- Area: reliability
+- Document date: 2026-09-30
+- Retrieved: 2026-10-02
+- Scope: topology: not-stated; model: CMP 170HX
+- Topics: cmp170hx, hardware-failure, xid-errors, reliability, power-limits
+- Basis Entries: `cmp170hx-unlock-prerequisites-finding`
+- Omitted private support records: 1
+
+### Citations
+
+No public citation retained.
+
+## cmp170hx-vbios-hard-fuse-validation-finding
+
+**CMP 170HX validates VBIOS device IDs against physical hard fuses, causing boot firmware load failures if non-native VBIOS images are flashed.**
+
+Testing with external hardware flashers and modified nvflash utilities confirmed that CMP 170HX hardware validates VBIOS device IDs against hard-burned efuses. Flashing mismatched firmware or attempting to bypass board ID certificate checks results in the GPU failing to load firmware at boot, demonstrating that device personality cannot be changed purely via SPI VBIOS flashing without software driver-level interception.
+
+- Kind: Claim
+- Status: active
+- Evidence: Unverified
+- Area: hardware
+- Document date: 2026-09-30
+- Retrieved: 2026-10-02
+- Scope: topology: single-card; model: CMP 170HX
+- Topics: cmp170hx, vbios, efuse, firmware, nvflash
+- Basis Entries: `cmp170hx-unlock-prerequisites-finding`
+- Omitted private support records: 1
+
+### Citations
+
+No public citation retained.
+
+## cmp170hx-glm-multicard-inference-finding
+
+**A 4-card unlocked CMP 170HX setup achieves over 100 tok/s serving GLM5.3-Flash at >200k context.**
+
+A community field report describes a 4-card CMP 170HX rig running GLM5.3-Flash, delivering >100 tok/s inference throughput at >200k context length. This demonstrates multi-card serving feasibility across large context windows on unlocked CMP 170HX hardware.
+
+- Kind: Claim
+- Status: active
+- Evidence: Unverified
+- Area: serving
+- Document date: 2026-09-30
+- Retrieved: 2026-10-02
+- Scope: topology: eight-card; model: GLM5.3-Flash
+- Topics: cmp170hx, multi-card, inference, glm5.3-flash, long-context
+- Basis Entries: `cmp170hx-vllm-inference-benchmark-finding`
+- Omitted private support records: 1
+
+### Citations
+
+No public citation retained.

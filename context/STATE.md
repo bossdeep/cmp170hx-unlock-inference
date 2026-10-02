@@ -3,12 +3,12 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 3
+acceptedRevision: 4
 doNotEdit: true
 ---
 # Current State
 
-Accepted revision 3.
+Accepted revision 4.
 
 Brief as of 2026-10-01.
 

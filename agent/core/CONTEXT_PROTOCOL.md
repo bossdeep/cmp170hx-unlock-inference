@@ -3,7 +3,7 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 3
+acceptedRevision: 4
 doNotEdit: true
 ---
 # OpenCat Research v0.5 Context and project-pack protocol

@@ -3,12 +3,20 @@ generated: true
 generator: opencat-research
 projectId: cmp170hx-unlock-inference
 objectiveId: cmp170hx-unlock-inference
-acceptedRevision: 3
+acceptedRevision: 4
 doNotEdit: true
 ---
 # Accepted changes
 
 Git history is the complete publication history. This projection lists current public records under the accepted revision that last changed them.
+
+## Revision 4
+
+Applied 2026-10-02T04:58:14.125Z.
+
+- Accepted Entry: `cmp170hx-failure-mode-xid154-finding` — Unlocked CMP 170HX cards face potential unrecoverable hardware failure (Xid 154, GFW_BOOT progress 0x1) under multi-card heavy PyTorch workloads unless power capped.
+- Accepted Entry: `cmp170hx-glm-multicard-inference-finding` — A 4-card unlocked CMP 170HX setup achieves over 100 tok/s serving GLM5.3-Flash at >200k context.
+- Accepted Entry: `cmp170hx-vbios-hard-fuse-validation-finding` — CMP 170HX validates VBIOS device IDs against physical hard fuses, causing boot firmware load failures if non-native VBIOS images are flashed.
 
 ## Revision 3
 
